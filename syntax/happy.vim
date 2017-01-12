@@ -22,7 +22,7 @@ set isident+='
 syn match haskell_comment  /--.*$/ contained contains=happy_todo,happy_fixme
 syn match haskell_char /'[^\\]'\|'\\.'/ contained
 
-syn region haskell_string           start=/"/ skip=/\\"/ end=/"/        contained
+syn region haskell_string           start=/"/ skip=/\\"\|\\\\/ end=/"/        contained
 syn region haskell_block_comment    start=/{-/ end=/-}/                 fold contained contains=haskell_block_comment,happy_todo,happy_fixme
 syn region haskell_directive        start=/{-#/ end=/#-}/               contained
 syn region haskell_code             start=/{/ skip=/'\\\?}'/ end=/}/    fold contains=haskell_comment,haskell_block_comment,haskell_string,haskell_char,haskell_code,haskell_directive
@@ -40,13 +40,13 @@ syn keyword happy_directives    %expect %error
 syn keyword happy_directives    %attributetype %attribute
 
 " %name directive
-syn match parser_name   /[a-zA-Z_][a-zA-Z_\d]*/ contained
+syn match parser_name   /[a-zA-Z_][a-zA-Z_0-9]*/ contained
 syn region happy_names  matchgroup=happy_directives start=/%name/       end=/%/me=e-1,he=e-1 contains=happy_name,parser_name,happy_comment
 
 " %token and association directives
-syn match token_name    /[a-zA-Z_][a-zA-Z_\d]*/         contained
-syn region token_name   start=/"/ skip=/\\"/ end=/"/    contained
-syn region token_name   start=/'/ skip=/\\'/ end=/'/    contained
+syn match token_name    /[a-zA-Z_][a-zA-Z_0-9]*/         contained
+syn region token_name   start=/"/ skip=/\\"\|\\\\/ end=/"/    contained
+syn region token_name   start=/'/ skip=/\\'\|\\\\/ end=/'/    contained
 
 syn region happy_tokens matchgroup=happy_directives start=/%token/      end=/%/me=e-1,he=e-1 contains=token_name,haskell_code,happy_comment
 syn region happy_assoc  matchgroup=happy_directives start=/%left/       end=/%/me=e-1,he=e-1 contains=token_name,haskell_code,happy_comment
@@ -56,9 +56,9 @@ syn region happy_assoc  matchgroup=happy_directives start=/%nonassoc/   end=/%/m
 syn match happy_separator   /%%/
 
 " Happy grammar
-syn match non_terminal  /[a-zA-Z_][a-zA-Z_\d\']*/         
-syn region terminal     start=/"/ skip=/\\"/ end=/"/    
-syn region terminal     start=/'/ skip=/\\'/ end=/'/    
+syn match non_terminal  /[a-zA-Z_][a-zA-Z_0-9\']*/         
+syn region terminal     start=/"/ skip=/\\"\|\\\\/ end=/"/    
+syn region terminal     start=/'/ skip=/\\'\|\\\\/ end=/'/    
 
 hi def link haskell_comment         Comment
 hi def link haskell_block_comment   Comment
